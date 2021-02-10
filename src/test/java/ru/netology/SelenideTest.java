@@ -42,7 +42,7 @@ public class SelenideTest {
             $(".calendar__arrow_direction_right:not(.calendar__arrow_double)").click();
         }
         $$("td").find(text(dayText)).click();
-        $("[name='name']").setValue("Ваня Пупкин");
+        $("[name='name']").setValue("Ваня Пупкин!");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
         $("[class='button__text']").click();
