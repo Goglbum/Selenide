@@ -1,6 +1,8 @@
 package ru.netology;
 
 
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -14,6 +16,11 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SelenideTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        Configuration.headless = true;
+    }
 
     @BeforeEach
     void setUp() {
