@@ -5,17 +5,15 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SelenideTest {
+    DatePicker datePicker = new DatePicker();
 
     @BeforeAll
     static void setUpAll() {
@@ -29,40 +27,21 @@ public class SelenideTest {
 
     @Test
     void passedRegistration() {
-        LocalDate date = LocalDate.now();
-        int actualMonth = date.getMonthValue();
-        date = date.plusDays(7);
-        int resultMonth = date.getMonthValue();
-        int resultDay = date.getDayOfMonth();
-        String dayText = Integer.toString(resultDay);
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
-        $(".icon_name_calendar").click();
-        if (actualMonth != resultMonth) {
-            $(".calendar__arrow_direction_right:not(.calendar__arrow_double)").click();
-        }
-        $$("td").find(text(dayText)).click();
+        datePicker.setRandomDateInCalendarByMouseClick(800, 1000);
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
         $("[class='button__text']").click();
-        $("[data-test-id='notification']").shouldHave(visible, Duration.ofSeconds(15));
+        $("[data-test-id='notification']").shouldHave(visible, Duration.ofSeconds(10));
     }
 
     @Test
     void failedCity() {
-        LocalDate date = LocalDate.now();
-        int actualMonth = date.getMonthValue();
-        date = date.plusDays(7);
-        int resultMonth = date.getMonthValue();
-        int resultDay = date.getDayOfMonth();
-        String dayText = Integer.toString(resultDay);
-        $("[placeholder='Город']").setValue("Алексеевка");
+        $("[placeholder='Город']").setValue("Саратов");
         $(".icon_name_calendar").click();
-        if (actualMonth != resultMonth) {
-            $(".calendar__arrow_direction_right:not(.calendar__arrow_double)").click();
-        }
-        $$("td").find(text(dayText)).click();
+        datePicker.setRandomDateInCalendarByMouseClick();
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
@@ -74,14 +53,9 @@ public class SelenideTest {
 
     @Test
     void failedData() {
-        String deleteString = Keys.chord(Keys.CONTROL, "a") + Keys.DELETE;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.now();
-        date = date.plusDays(1);
-        String dataText = formatter.format(date);
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
-        $("[placeholder='Дата встречи']").setValue(deleteString).setValue(dataText);
+        datePicker.setRandomDateInCalendarByText();
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
@@ -91,20 +65,10 @@ public class SelenideTest {
 
     @Test
     void failedName() {
-        LocalDate date = LocalDate.now();
-        int actualMonth = date.getMonthValue();
-        date = date.plusDays(7);
-        int resultMonth = date.getMonthValue();
-        int resultDay = date.getDayOfMonth();
-        String dayText = Integer.toString(resultDay);
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
-        $(".icon_name_calendar").click();
-        if (actualMonth != resultMonth) {
-            $(".calendar__arrow_direction_right:not(.calendar__arrow_double)").click();
-        }
-        $$("td").find(text(dayText)).click();
-        $("[name='name']").setValue("Ваня Пупкин!");
+        datePicker.setRandomDateInCalendarByText();
+        $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
         $("[class='button__text']").click();
@@ -113,21 +77,13 @@ public class SelenideTest {
 
     @Test
     void failedCheckbox() {
-        LocalDate date = LocalDate.now();
-        int actualMonth = date.getMonthValue();
-        date = date.plusDays(7);
-        int resultMonth = date.getMonthValue();
-        int resultDay = date.getDayOfMonth();
-        String dayText = Integer.toString(resultDay);
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
         $(".icon_name_calendar").click();
-        if (actualMonth != resultMonth) {
-            $(".calendar__arrow_direction_right:not(.calendar__arrow_double)").click();
-        }
-        $$("td").find(text(dayText)).click();
+        datePicker.setRandomDateInCalendarByMouseClick();
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
+        $("[class='button__text']").click();
         $("[class='button__text']").click();
         String actual = $(".input_invalid").getText();
         String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных";
