@@ -34,12 +34,12 @@ public class SelenideTest {
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
         $("[class='button__text']").click();
-        $("[data-test-id='notification']").shouldHave(visible, Duration.ofSeconds(10));
+        $("[data-test-id='notification']").shouldHave(visible, Duration.ofSeconds(15));
     }
 
     @Test
     void failedCity() {
-        $("[placeholder='Город']").setValue("Саратов");
+        $("[placeholder='Город']").setValue("Алексеевка");
         $(".icon_name_calendar").click();
         datePicker.setRandomDateInCalendarByMouseClick();
         $("[name='name']").setValue("Ваня Пупкин");
@@ -55,7 +55,7 @@ public class SelenideTest {
     void failedData() {
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
-        datePicker.setRandomDateInCalendarByText();
+        datePicker.setRandomDateInCalendarByText(1, 2);
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
@@ -68,7 +68,7 @@ public class SelenideTest {
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
         datePicker.setRandomDateInCalendarByText();
-        $("[name='name']").setValue("Ваня Пупкин");
+        $("[name='name']").setValue("Ваня Пупкин!");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
         $("[class='button__text']").click();
@@ -83,7 +83,6 @@ public class SelenideTest {
         datePicker.setRandomDateInCalendarByMouseClick();
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
-        $("[class='button__text']").click();
         $("[class='button__text']").click();
         String actual = $(".input_invalid").getText();
         String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных";
