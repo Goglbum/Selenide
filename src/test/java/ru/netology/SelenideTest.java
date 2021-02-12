@@ -29,7 +29,7 @@ public class SelenideTest {
     void passedRegistration() {
         $("[placeholder='Город']").setValue("Са");
         $$(".menu-item__control").find(exactText("Саратов")).click();
-        datePicker.setRandomDateInCalendarByMouseClick(800, 1000);
+        datePicker.setRandomDateInCalendarByMouseClick(3, 3);
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
@@ -41,7 +41,7 @@ public class SelenideTest {
     void failedCity() {
         $("[placeholder='Город']").setValue("Алексеевка");
         $(".icon_name_calendar").click();
-        datePicker.setRandomDateInCalendarByMouseClick();
+        datePicker.setRandomDateInCalendarByMouseClick(800, 1000);
         $("[name='name']").setValue("Ваня Пупкин");
         $("[name='phone']").setValue("+79999999999");
         $("[data-test-id='agreement']").click();
